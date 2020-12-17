@@ -40,43 +40,49 @@ A description of the full dataset is found [here](http://jse.amstat.org/v19n3/de
 The objective of this project is to identify three areas of focus that drive house prices in Ames. This is done by building a good predictive model coupled with exploratory data analysis, which can provide insights as to those areas of focus. 
 
 #### Analysis and Findings
-[<u>Data Cleaning and Exploratory Data Analysis</u>](code/01-data-cleaning-and-eda.ipynb)is first done on the dataset. It is necessary to first remove outliers per the Data Documentation text that came with the dataset(De Cock, 2010). For missing values, I follow a general rule to drop columns with >60% null values (Berdikulov, 2019) and for the rest of the missing values, perform imputations of median and mode accordingly as appropriate. 
+[Data Cleaning and Exploratory Data Analysis](code/01-data-cleaning-and-eda.ipynb) is first done on the dataset. It is necessary to first remove outliers per the Data Documentation text that came with the dataset(De Cock, 2010). For missing values, I follow a general rule to drop columns with >60% null values (Berdikulov, 2019) and for the rest of the missing values, perform imputations of median and mode accordingly as appropriate. 
 
 While reviewing each feature, I also consider its interactions with the target variable, Sale Price, and perform feature engineering based on insights from analysis. For basement area, I added both the Basement 1 and 2 area to form the total area, which had a much stronger correlation to the sale price, compared to each one (Figure 1). For the model, I would just take the total basement area and drop the individual features from the model. 
 
 ![](images/sale-price-basement.JPG)
-*Figure 1: Scatterplot of Sale Price against Total Basement Area*
+
+*Figure 1: Scatterplots of Sale Price against Basement 1 Area, Basement 2 Area and Total Basement Area*
 
 Another finding is how the area of any part of the house seem to always have a relatively strong correlation (>0.5) with sale price. When I add the basement area and ground living area, I get the total house area which is highly correlated (0.8) with sale price (Figure 2). This makes logical sense as well as bigger homes are expected to fetch higher prices.
 
 ![](images/sale-price-house-area.JPG)
+
 *Figure 2: Scatterplot of Sales Price against Total Area of House*
 
-Generally for features with little to no correlation (0.5) to sale price, I would exclude them from my model, as these would only introduce noise to my model, and lower its accuracy. Prior to excluding any feature, I would consider its nature and whether there are other features that interact with that feature, which together may result in stronger correlation to sale price. I also exercise judgment and domain knowledge of house purchases. 
+Generally for features with little to no correlation (<0.5) to sale price, I would exclude them from my model, as these would only introduce noise to my model, and lower its accuracy. Prior to excluding any feature, I would consider its nature and whether there are other features that interact with that feature, which together may result in stronger correlation to sale price. I also exercise judgment and domain knowledge of house purchases. 
 
 Basement quality and condition are two measures of the same factor, from a home buyer's perspective. In other words, I would consider both factors together when deciding between one house or another. As expected, the better the quality and condition of the house, the higher price it can fetch (Figure 3).
 
 ![](images/basement-quality-condition.JPG)
+
 *Figure 3: Violinplots of Sale Price against Basement Quality and Sale Price against Basement Condition*
 
 We can see the same trend for exterior material and overall quality and condition (Figure 4). 
 
 ![](images/overall-quality-condition.JPG)
+
 *Figure 4: Scatterplots of Sale Price against the all metrics for Quality and Condition*
 
 One of the most important considerations when purchasing a house is location. We can see that the median sale price across each neighbourhood differ from each other (Figure 5). Some neighbourhoods are able to fetch higher price than others.  
 
 ![](images/neighbourhood.JPG)
+
 *Figure 5: Violinplot of Sale Price against Neighborhood*
 
 Once data is cleaned and low correlation or subsumed features are dropped, I check for multicollinearity using a heatmap (Figure 6). Excessive multicollinearity can be a problem (Frost, 2020) as putting both variables through the model would violate the assumptions of linear regression which is that variables must be independent of each other. 
 
 ![](images/heatmap.JPG)
+
 *Figure 6: Correlation heatmap between variables in dataset*
 
 From here, I drop the garage cars features as it is strongly positively correlated with garage area (0.9) . In any case, they both reflect the same underlying feature which is the capacity of the garage. 
 
-[<u>Preprocessing and Modelling</u>](code/02-preprocessing-and-modelling.ipynb)
+[<ins>Preprocessing and Modelling</ins>](code/02-preprocessing-and-modelling.ipynb)
 
 At this stage, I prepare the data for modelling. From the data dictionary, we can see that there are categorical variables - nominal and ordinal. These need to be encoded to be used in the model.For nominal categories, I use pd.get_dummies to one hot encode it, whereas for ordinal categories, I map a rating value according to the scale of the respective features. 
 
@@ -95,7 +101,7 @@ Below the results of the regression for the four models:
 
 From above, we see that generally regularized models work better. Lasso Model has the best performance, being able to account for 87.7% of variability of data. On the RMSE metric, Elastic Net Model did the best but only slightly better than Lasso model. From here, I go forward with Lasso Model. 
 
-[<u>Model Tuning and Benchmarking</u>](code/03-model-tuning-and-recommendations.ipynb)
+[<ins>Model Tuning and Benchmarking</ins>](code/03-model-tuning-and-recommendations.ipynb)
 
 With the Lasso Model, I try to improve the model performance by removing zero-coefficient variables and low-impact variables (those with coefficients <0.1). However, it appears that doing both did not improve the R2 score. 
 
@@ -108,11 +114,12 @@ To ascertain how good the model is, I also benchmark it against a baseline model
 
 From here we see that Lasso Model (0.877) is a better fit than our baseline model (0.836) as it can account for more variability in data. Therefore, Lasso Model is our production model.
 
-<u>Model Deployment and Conclusion</u>
+<ins>Model Deployment and Conclusion</ins>
 
 From the production model, I found the top 10 features that affect house prices in Ames (Figure 7).
 
 ![](images/10-features-impact.JPG)
+
 *Figure 7: Coefficients of top 10 features from production model*
 
 The most important quality of a house is the total area. This makes sense, since the bigger the house, the more expensive it should be. From above, the garage area also comes in third in priority. For a city where cars are an important mode of transport, it is no wonder that they value the area of garage for parking their cars. 
@@ -126,25 +133,31 @@ An interesting insight is also that location also plays a part, with Crawford Ne
 Considering results of the model and exploratory data analysis, there are three main focus areas that are important in a house : Area, Quality and Condition, and Location.
 
 **Area**
+
 For bigger houses, during sales pitch to potential home buyers, real estate agents should emphasise the large area. For instance, the living area, garage area, basement area.
 
 When speaking to home owners who intend to sell their house, make this known and if their house is objectively small, possibly consider interior architecture that could increase the size of available space. For instance, foldable bed, wall beds or hidden beds, or a couch that could transition to a bed and storage saving spaces. Alternatively, consider other aesthetics to create the illusion of a bigger house. For instance, adding mirrors. These features and changes would be more likely to boost the value of their house. 
 
 **Quality and Condition**
+
 In terms of quality, it appears that there is high value in both form and function. People of Ames look to exterior quality and overally quality of the material, which is the form of the house. During home viewing, the home owner should ensure that exterior forms like the wall, flooring, does not show signs of impairment. 
 
 Function-wise, it makes sense that people would want to buy a house with fixtures that work. For instance, in the kitchen, the stove should be operating well. Should there be anything that is not working, it is wise that the real estate agent advise homeowners to fix it first. Should potential home buyers be aware that some items are not working, it becomes a valid point to lower the house price. This is best avoided. 
 
 **Location** 
+
 Crawford was the only neighbourhood that came up in the top 10 features, among others. This may mean several things. First, that just by having a house in Crawford, one can command a higher price. It is possible that the accessibilty, amenities and facilities available in Crawford allows it to fetch a higher price. Real estate agents should note the base price for Crawford. Second, that each neighborhood is likely to have an attractive factor that boost house prices. It is wise to identify these to better sell a house. 
 
-<u>General Limitations</u>
+<ins>General Limitations</ins>
+
 It is wise to note that there are some limitations of this model. This model is purely based on Ames Housing Data, and hence is applicability is limited to this city in Iowa. While the above insights may be relevant to Ames, it may not apply to other cities in Iowa or other states in the US.
 
-<u>Scaling</u>
+<ins>Scaling</ins>
+
 Considering the above, with the right data, there are ample opporutnities to build upon this model. I could scale this model down to respective neighbourhoods in cities, and find top features that is most valued by the people in the neighbourhood. There is also potential to scale this upwards, to other cities in Iowa, or even to other states in the US. It would be exciting to see how people's tastes and preferences towards home differ across states. 
 
 ## References
+
 Data Documentation - Ames Housing Dataset (De Cock, 2010).
 http://jse.amstat.org/v19n3/decock/DataDocumentation.txt
 
