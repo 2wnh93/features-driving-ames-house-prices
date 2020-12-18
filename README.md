@@ -5,7 +5,7 @@
 This is a unidimensional regression problem which predicts housing prices based on several features of a house (Eg.house living area, garage capacity, lot frontage, house type, masonry etc.), based on Ames Housing Dataset.
 
 ## Introduction
-As a real estate agent, knowing the top features that drive house prices, we would be able to understand what features of a house are more valuable to home buyers and subsequently, drive efforts towards successful sale by sharing this information to home owners who intend to sell their house. Based on the Ames Housing Dataset, we apply a supervised learning model, from which we would be able to ascertain which are the top features that drive house prices, more than others.
+The Bock Real Estate Group has engaged our real estate consultant team to help clinch more deals and specifically, to look into how to bridge expectations between home buyers and home sellers. As a real estate agent, knowing the top features that drive house prices, we would be able to understand what features of a house are more valuable to home buyers and subsequently, drive efforts towards successful sale by sharing this information to home owners who intend to sell their house. Based on the Ames Housing Dataset, we apply a supervised learning model, from which we would be able to ascertain which are the top features that drive house prices, more than others.
 
 ## Data Dictionary
 Below the description of each features in the final dataset used in the model.  
@@ -144,7 +144,7 @@ Considering results of the model and exploratory data analysis, there are three 
 
 **Area**
 
-For bigger houses, during sales pitch to potential home buyers, real estate agents should emphasise the large area. For instance, the living area, garage area, basement area.
+For bigger houses, during sales pitch to potential home buyers, real estate agents of Bock Real Estate Group should emphasise the large area. For instance, the living area, garage area, basement area.
 
 When speaking to home owners who intend to sell their house, make this known and if their house is objectively small, possibly consider interior architecture that could increase the size of available space. For instance, foldable bed, wall beds or hidden beds, or a couch that could transition to a bed and storage saving spaces. Alternatively, consider other aesthetics to create the illusion of a bigger house. For instance, adding mirrors. These features and changes would be more likely to boost the value of their house. 
 
