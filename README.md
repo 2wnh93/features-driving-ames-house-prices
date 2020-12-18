@@ -99,7 +99,17 @@ Below the results of the regression for the four models:
 | R2 score | -5.902*e^21  | 0.875 | 0.877 | 0.876 |
 | RMSE | 26104940455 | 0.836 | 0.832 | 0.830 |
 
-From above, we see that generally regularized models work better. Lasso Model has the best performance, being able to account for 87.7% of variability of data. On the RMSE metric, Elastic Net Model did the best but only slightly better than Lasso model. From here, I go forward with Lasso Model. 
+![](images/predict-against-actual.jpg)
+
+*Figure 6: Scatterplots of predicted values against actual values*
+
+From above, we see that generally regularized models work better. Lasso Model has the best performance, being able to account for 87.7% of variability of data. We can see that the blue scatter points are very close to the red line, where the red line represents a perfect fit. 
+
+![](images/residual-distr-plot.jpg)
+
+*Figure 6: Scatterplots of residuals against actual values*
+
+Looking at the residual plots, we want to see a random scatter with no obvious trend, centred around zero. We see this for the Lasso Regression Model and 2 other regularized models, except for Linear Regression. This shows that Lasso Regression model is a good fit with randomized errors. 
 
 [<ins>Model Tuning and Benchmarking</ins>](code/03-model-tuning-and-recommendations.ipynb)
 
